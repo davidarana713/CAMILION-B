@@ -5,7 +5,7 @@ const dbregistroProducto = async (newProducto) => {
 }
 
 const dbgetProducto = async () => {
-    return await productoModel.find();
+    return await productoModel.find().populate(['categoria']);
 }
 
 const dbdeleteProductoPorId = async (_id) =>{
