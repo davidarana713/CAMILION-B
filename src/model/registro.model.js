@@ -31,7 +31,7 @@ const registroSchema = new Schema ({
     rol:{
         type:String,
         required:true,
-        enum:["administrador","ayudante","usuario"],
+        enum:["admin","ayudante","usuario"],
         default:"usuario"
     }
 
