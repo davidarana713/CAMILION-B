@@ -8,6 +8,10 @@ const dbgetRegistro = async () => {
     return await registroModel.find();
 }
 
+const dbgetRegistroPorID = async( _id ) => {
+    return await registroModel.findOne({ _id });
+}
+
 const dbdeleteRegistroPorId = async (_id) =>{
     return await registroModel.findOneAndDelete({_id});
 }
@@ -24,6 +28,7 @@ const dbactualizarRegistroPorId = async (_id,inputData) => {
 export {
     dbregistroRegistro,
     dbgetRegistro,
+    dbgetRegistroPorID,
     dbdeleteRegistroPorId,
     dbactualizarRegistroPorId
 }

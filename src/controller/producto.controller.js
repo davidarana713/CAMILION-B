@@ -1,4 +1,4 @@
-import { dbactualizarProductoPorId, dbdeleteProductoPorId, dbgetProducto, dbregistroProducto } from "../services/producto.service.js";
+import { dbactualizarProductoPorId, dbdeleteProductoPorId, dbgetProducto, dbgetProductoPorId, dbregistroProducto } from "../services/producto.service.js";
 
 const creaProducto = async (req, res) => {
 
@@ -84,9 +84,26 @@ const actuliazarProducto = async (req, res) => {
 
 };
 
+const getProductoPorId = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const producto = await dbgetProductoPorId( id );
+
+        res.json({
+            producto
+        })
+    }
+   catch (error){
+    console.error(error);
+    res.status(500).json({msg:'Error al obtener producto por id'})
+   }
+
+}
+
 export {
     creaProducto,
     getProducto,
     deleteProducto,
-    actuliazarProducto
+    actuliazarProducto,
+    getProductoPorId
 }

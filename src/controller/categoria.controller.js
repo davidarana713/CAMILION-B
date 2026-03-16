@@ -59,6 +59,8 @@ const deleteCategoria = async (req, res) => {
     }
 }
 
+const getCategoriaPorId
+
 const actuliazarCategoria = async (req, res) => {
 
    try{

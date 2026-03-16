@@ -8,6 +8,10 @@ const dbgetProducto = async () => {
     return await productoModel.find().populate(['categoria']);
 }
 
+const dbgetProductoPorId = async (_id) =>{
+    return await productoModel.findOne({_id});
+}
+
 const dbdeleteProductoPorId = async (_id) =>{
     return await productoModel.findOneAndDelete({_id});
 }
@@ -25,5 +29,6 @@ export {
     dbregistroProducto,
     dbgetProducto,
     dbdeleteProductoPorId,
-    dbactualizarProductoPorId
+    dbactualizarProductoPorId,
+    dbgetProductoPorId
 }

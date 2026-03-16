@@ -12,6 +12,10 @@ const dbdeleteCategoriaPorId = async (_id) =>{
     return await categoriaModel.findOneAndDelete({_id});
 }
 
+const dbgetCategoriaPorID = async (_id) =>{
+    return await categoriaModel.findOne({_id});
+}
+
 const dbactualizarCategoriaPorId = async (_id,inputData) => {
 
     // return await categoriaModel.findByIdAndUpdate(
@@ -31,5 +35,6 @@ export {
     dbregistroCategoria,
     dbgetCategoria,
     dbdeleteCategoriaPorId,
-    dbactualizarCategoriaPorId
+    dbactualizarCategoriaPorId,
+    dbgetCategoriaPorID
 }

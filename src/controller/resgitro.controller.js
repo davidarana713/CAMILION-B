@@ -1,4 +1,4 @@
-import {dbactualizarRegistroPorId, dbdeleteRegistroPorId, dbgetRegistro, dbregistroRegistro } from "../services/registro.service.js"
+import {dbactualizarRegistroPorId, dbdeleteRegistroPorId, dbgetRegistro, dbgetRegistroPorID, dbregistroRegistro } from "../services/registro.service.js"
 
 const creaRegistro = async (req, res) => {
 
@@ -38,6 +38,20 @@ const getRegistro = async (req, res) => {
         });
     }
 
+}
+
+const getRegistroPorID = async ( req, res ) => {
+    try {
+        const id = req.params.id;
+        const registro = await dbgetRegistroPorID( id );
+
+        res.json({
+            registro    
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({msg: 'Error al obtener usuario por id'})
+    }
 }
 
 const deleteRegistro = async (req, res) => {
@@ -87,6 +101,7 @@ const actuliazarRegistro = async (req, res) => {
 export {
     creaRegistro,
     getRegistro,
+    getRegistroPorID,
     deleteRegistro,
     actuliazarRegistro
 }
