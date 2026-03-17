@@ -1,4 +1,4 @@
-import { dbregistroCategoria,dbgetCategoria, dbdeleteCategoriaPorId, dbactualizarCategoriaPorId } from "../services/categoria.service.js"
+import { dbregistroCategoria,dbgetCategoria, dbdeleteCategoriaPorId, dbactualizarCategoriaPorId, dbgetCategoriaPorID } from "../services/categoria.service.js"
 
 const creaCategoria = async (req, res) => {
 
@@ -59,7 +59,20 @@ const deleteCategoria = async (req, res) => {
     }
 }
 
-const getCategoriaPorId
+const getCategoriaPorID =async ( req, res ) => {
+    try{
+        const id = req.params.id;
+        const categoria = await dbgetCategoriaPorID( id );
+
+        res.json({
+          categoria
+        })
+    }
+    catch(error){
+        console.error(error);
+        res.status(500).json({msg:'Error al obtener la categoria por id'})
+    }
+}
 
 const actuliazarCategoria = async (req, res) => {
 
@@ -87,5 +100,6 @@ export {
     creaCategoria,
     getCategoria,
     deleteCategoria,
-    actuliazarCategoria
+    actuliazarCategoria,
+    getCategoriaPorID
 }
