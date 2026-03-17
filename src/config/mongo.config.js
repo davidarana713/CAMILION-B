@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb://localhost:27017/db-shop';
+const MONGO_URI = 'mongodb+srv://camilion:bonita2077780@cluster0.ebzuws4.mongodb.net/db-shop';
 
 const dbconeccion = async () => {
 
