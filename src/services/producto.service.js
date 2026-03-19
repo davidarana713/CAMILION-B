@@ -13,7 +13,6 @@ const dbdeleteProductoPorId = async (_id) =>{
 }
 
 const dbactualizarProductoPorId = async (_id,inputData) => {
-
     return await productoModel.findByIdAndUpdate(
         _id,
         inputData,
@@ -21,9 +20,65 @@ const dbactualizarProductoPorId = async (_id,inputData) => {
     );
 }
 
+// Nuevo método: Actualizar stock de múltiples productos
+const dbactualizarStockMultiple = async (productos) => {
+    try {
+        const resultados = [];
+
+        for (const item of productos) {
+            const { productoId, cantidad } = item;
+
+            // Obtener el producto actual para restar el stock
+            const producto = await productoModel.findById(productoId);
+
+            if (!producto) {
+                resultados.push({
+                    productoId,
+                    error: 'Producto no encontrado',
+                    success: false
+                });
+                continue;
+            }
+
+            // Calcular el nuevo stock
+            const nuevoStock = producto.stock - cantidad;
+
+            if (nuevoStock < 0) {
+                resultados.push({
+                    productoId,
+                    error: `Stock insuficiente. Stock disponible: ${producto.stock}`,
+                    success: false
+                });
+                continue;
+            }
+
+            // Actualizar el stock del producto
+            const productoActualizado = await productoModel.findByIdAndUpdate(
+                productoId,
+                { stock: nuevoStock },
+                { new: true }
+            );
+
+            resultados.push({
+                productoId,
+                nombre: productoActualizado.nombre,
+                stockAnterior: producto.stock,
+                stockNuevo: nuevoStock,
+                success: true
+            });
+        }
+
+        return resultados;
+    } catch (error) {
+        console.error('Error en dbactualizarStockMultiple:', error);
+        throw error;
+    }
+}
+
 export {
     dbregistroProducto,
     dbgetProducto,
     dbdeleteProductoPorId,
-    dbactualizarProductoPorId
+    dbactualizarProductoPorId,
+    dbactualizarStockMultiple
 }

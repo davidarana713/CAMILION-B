@@ -1,8 +1,11 @@
 import { Schema, model } from "mongoose";
 
 const ofertaSchema = new Schema ({
-    id:{
-        type:Number,
+    productId:{
+        type:Schema.Types.ObjectId,
+        ref:'producto',
+
+        
         required:true
     },
     descuento:{

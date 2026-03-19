@@ -16,12 +16,12 @@ const productoSchema = new Schema({
     categoria: {
         type: Schema.Types.ObjectId,
         ref: 'categoria',
-        required: true,
+        // required: true,
 
     },
     talla: {
         type: String,
-        required: true,
+        // required: true,
         enum: ["S", "M", "L", "XL", "XXL", "NO APLICA"]
     },
     stock: {

@@ -1,4 +1,4 @@
-import { dbactualizarProductoPorId, dbdeleteProductoPorId, dbgetProducto, dbregistroProducto } from "../services/producto.service.js";
+import { dbactualizarProductoPorId, dbdeleteProductoPorId, dbgetProducto, dbregistroProducto, dbactualizarStockMultiple } from "../services/producto.service.js";
 
 const creaProducto = async (req, res) => {
 
@@ -84,9 +84,52 @@ const actuliazarProducto = async (req, res) => {
 
 };
 
+// Nuevo controlador: Actualizar stock de múltiples productos
+const actualizarStockMultiple = async (req, res) => {
+    try {
+        const { productos } = req.body;
+
+        // Validar que se recibieron productos
+        if (!productos || !Array.isArray(productos) || productos.length === 0) {
+            return res.status(400).json({
+                msg: 'Error: Debes enviar un array de productos',
+                success: false
+            });
+        }
+
+        // Actualizar el stock de todos los productos
+        const resultados = await dbactualizarStockMultiple(productos);
+
+        // Verificar si alguna actualización falló
+        const fallos = resultados.filter(r => !r.success);
+        
+        if (fallos.length > 0) {
+            return res.status(400).json({
+                msg: 'Algunas actualizaciones fallaron',
+                resultados,
+                success: false
+            });
+        }
+
+        res.json({
+            msg: 'Stock de todos los productos actualizado correctamente',
+            resultados,
+            success: true
+        });
+    } catch (error) {
+        console.error('Error en actualizarStockMultiple:', error);
+        res.status(500).json({
+            msg: 'Error al actualizar el stock de los productos',
+            error: error.message,
+            success: false
+        });
+    }
+};
+
 export {
     creaProducto,
     getProducto,
     deleteProducto,
-    actuliazarProducto
+    actuliazarProducto,
+    actualizarStockMultiple
 }
